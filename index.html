@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital@1&family=Montserrat&family=Press+Start+2P&family=Roboto&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        h1{
+            font-family: 'Chakra Petch', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 25px;
+            padding-top: 5px;
+            
+            
+            background-color: white;
+            width: 100%;
+            text-align: center;
+            
+        }
+        #resultBox{
+            font-family: 'Chakra Petch', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            
+            width: 200px;
+            height: 200px;
+            border: solid white 10px;
+            margin-left: 42%;
+            font-size: 100px;
+            color: white;
+        }
+        input{
+            font-family: 'Chakra Petch', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            
+            width: 200px;
+            height: 150px;
+            font-size: 100px;
+            background-color: black;
+            color: white;
+            border: solid white 5px;
+            /* margin-left: 10%; */
+        }
+        #wordBox{
+            font-family: 'Chakra Petch', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            letter-spacing: 5px;
+            line-height: 30px;
+            width: 500px;
+            height: 150px;
+            border: solid white 5px;
+            /* margin-left: 70%; */
+            color: white;
+            /* margin-top: 5%; */
+        }
+        #id{
+            margin-left: 40%;
+        }
+        #num{
+            color: white;
+            width: 13px;
+            height: 15px;
+            border: solid white 2px;
+        }
+        #flexbox{
+            display: flex;
+            justify-content: space-around;
+            
+        }
+        #mini{
+            display: flex;
+            flex-direction: column;
+            
+            
+        }
+        #btn{
+            margin-top: 20px;
+            margin-left: 40%;
+            width: 50px;
+            height: 20;
+            
+        }
+        #details{
+            color: white;
+            font-family: 'Chakra Petch', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            text-align: center;
+        }
+        #options{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            
+        }
+        #options >img{
+            height: 84px;
+            width: 220px;
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+        
+        
+        #sans{
+            margin-left: 42%;
+            width: 150px;
+            
+        }
+    </style>
+</head>
+<body id="body">
+    <h1>RANDOM NUMBER GAME</h1>
+    <div id="resultBox"></div>
+    <img id="sans" src="img/sans-undertale.jpg">
+    <div id="flexbox">
+        <div id="mini">
+            <input id="anwrBox">
+            <button id="btn">Guess?</button>
+        </div>
+        <div id="wordBox">* You feel like you're going to have a bad time.</div>
+    </div>
+    <div id="UI">
+        <div id="details">
+            <p>Chara LV 19 HP:01/92</p>
+        </div>
+        <div id="options">
+            <img src="img/fightBTN.png">
+            <img src="img/actBTN.png">
+            <img src="img/itemBTN.png">
+            <img src="img/mercyBTN.jpg">
+        </div>
+    </div>
+    <div id="num"></div>
+
+
+
+    <script>
+        btn.addEventListener('click', submit)
+        const num = Math.floor((Math.random() * 10) + 1)
+        var wordbox = document.getElementById('wordBox')
+        var resultbox = document.getElementById('resultBox')
+        var NUM = document.getElementById('num')
+        NUM.textContent = num;
+        console.log(num)
+
+
+
+        function submit()
+        {
+            const anwr = document.getElementById('anwrBox')
+            resultbox.textContent = anwr.value;
+            if(anwr.value == num)
+            {
+                wordbox.textContent = 'congrats!!!';
+                document.getElementById('body').style.backgroundColor = 'green';
+            }
+            else if(anwr.value < num)
+            {
+                wordbox.textContent = 'too low!!!';
+                /* document.getElementById('body').style.backgroundColor = 'red'; */
+            }
+            else{
+                wordbox.textContent = 'too high!!!';
+                /* document.getElementById('body').style.backgroundColor = 'red'; */
+            }
+            var config = {
+                type: Phaser.AUTO,
+                parent: 'phaser-example',
+                backgroundColor: '#0072bc',
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        debug: true
+                    }
+                },
+                scene: {
+                    preload: preload,
+                    create: create,
+                    update: update
+                }
+            };
+
+            var cursors;
+            var player;
+
+            var game = new Phaser.Game(config);
+
+            function preload ()
+            {
+                this.load.image('sans', 'img/sans-undertale.jpg');
+            }
+
+            function create ()
+            {
+                cursors = this.input.keyboard.createCursorKeys();
+
+                player = this.physics.add.image(400, 300, 'sans');
+
+                player.setCollideWorldBounds(true);
+            }
+
+            function update ()
+            {
+                player.setVelocity(0);
+
+                if (cursors.left.isDown)
+                {
+                    player.setVelocityX(-300);
+                }
+                else if (cursors.right.isDown)
+                {
+                    player.setVelocityX(300);
+                }
+
+                if (cursors.up.isDown)
+                {
+                    player.setVelocityY(-300);
+                }
+                else if (cursors.down.isDown)
+                {
+                    player.setVelocityY(300);
+                }
+            }
+
+                    }
+    </script>
+</body>
+</html>
